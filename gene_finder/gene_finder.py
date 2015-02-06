@@ -20,8 +20,6 @@ def shuffle_string(s):
     return ''.join(random.sample(s,len(s)))
 
 ### YOU WILL START YOUR IMPLEMENTATION FROM HERE DOWN ###
-
-
 def get_complement(nucleotide):
     """ Returns the complementary nucleotide
 
@@ -38,7 +36,8 @@ def get_complement(nucleotide):
         if nucleotide == nuc[i]:
             return com_nuc[i]
     raise ValueError
-    
+    return None
+
 def get_reverse_complement(dna):
     """ Computes the reverse complementary sequence of DNA for the specfied DNA
         sequence
@@ -50,7 +49,7 @@ def get_reverse_complement(dna):
     >>> get_reverse_complement("CCGCGTTCA")
     'TGAACGCGG'
     """
-    rc=""
+    rc=''
     for nucleotide in dna:
         rc=get_complement(nucleotide)+rc
     return rc
@@ -72,7 +71,6 @@ def rest_of_ORF(dna):
         if dna[i:i+3]in('TAG','TAA','TGA'):
             return dna[:i]
     return dna
-
 
 def find_all_ORFs_oneframe(dna):
     """ Finds all non-nested open reading frames in the given DNA sequence and returns
@@ -131,7 +129,7 @@ def find_all_ORFs_both_strands(dna):
 def longest_ORF(dna):
     """ Finds the longest ORF on both strands of the specified DNA and returns it
         as a string
-    >>> longest_ORF("ATGCGAATGTAGCATCAAA")
+    >>> longest_ORF()
     'ATGCTACATTCGCAT'
     """
     #Returns the first longest ORF if there are more than one longest ORF
@@ -140,8 +138,8 @@ def longest_ORF(dna):
             if len(ORF)>len(ORFl):
                 ORFl=ORF
     return ORFl
-      
-def longest_ORF_noncoding(dna, num_trials):
+
+def longest_ORF_noncoding(dna,num_trials):
     """ Computes the maximum length of the longest ORF over num_trials shuffles
         of the specfied DNA sequence
         
@@ -149,13 +147,14 @@ def longest_ORF_noncoding(dna, num_trials):
         num_trials: the number of random shuffles
         returns: the maximum length longest ORF """
     l=0
-    longest=0
+    dnal=0
     dnalist=list(dna)
     for i in range(num_trials):
-        l.append(len(longest_ORF(random.shuffle(dnalist))))
-        if l[i]>longest:
-            longest=l[i]
-    return longest
+        random.shuffle(dnalist)
+        l=len(longest_ORF(dnalist))
+        if l>dnal:
+            dnal=l
+    return dnal
 
 def coding_strand_to_AA(dna):
     """ Computes the Protein encoded by a sequence of DNA.  This function
