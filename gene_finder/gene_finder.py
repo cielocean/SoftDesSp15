@@ -9,6 +9,7 @@ Mini Project 1: Gene Finder
 
 """
 
+
 # you may find it useful to import these variables (although you are not required to use them)
 from amino_acids import aa, codons, aa_table
 import random
@@ -187,7 +188,7 @@ def gene_finder(dna):
     aa=[]
     for ORF in ORFb:
         if len(ORF)>threshold:
-            aa.extend(coding_strand_to_AA(ORF))
+            aa.append(coding_strand_to_AA(ORF))
     return aa
 
 
