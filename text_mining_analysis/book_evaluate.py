@@ -103,8 +103,12 @@ def plot(L):
 	"""
 
 	x=filter(L)
+	plt.xlabel('Chapter')
+	plt.ylabel('Sentiment Level')
+
 	plt.plot(list(range(len(x))),x)
 	plt.show()
 
-plot(sentiment_lvls(format_text(je)))
+plot(sentiment_lvls(format_text(emma)))
+
 
