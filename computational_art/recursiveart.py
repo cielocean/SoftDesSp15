@@ -16,12 +16,25 @@ def build_random_function(min_depth, max_depth):
                  (see assignment writeup for details on the representation of
                  these functions)
     """
+    # random_function=[]
+    # r=random.randint(0,1)
     if max_depth <= 1 or (min_depth <= 1 and random.randint(0,1)):
+        # random_function.append(random.choice(['x','y']))
+        # return random_function
         return random.choice(['x', 'y'])
+    # elif min_depth<=1:
+    #     if r==0:
+    #         random_function.append(random.choice(['x','y']))
+    #         return random_function
     if random.randint(0,1):
-       return [random.choice(['prod', 'avg']), \
+        # random_function.append(random.choice(['prod','avg']))
+        # random_function.append(build_random_function(min_depth-1,max_depth-1))
+        # random_function.append(build_random_function(min_depth-1,max_depth-1))
+        return [random.choice(['prod', 'avg']), \
                     build_random_function(min_depth - 1, max_depth - 1), \
                     build_random_function(min_depth - 1, max_depth - 1)]
+    # random_function.append(random.choice(['cos','sin']))
+    # random_function.append(build_random_function(min_depth-1,max_depth-1))
     return [random.choice(['cos', 'sin']), \
                 build_random_function(min_depth - 1, max_depth - 1)]
     
@@ -127,9 +140,9 @@ def test_image(filename, x_size=350, y_size=350):
         for j in range(y_size):
             x = remap_interval(i, 0, x_size, -1, 1)
             y = remap_interval(j, 0, y_size, -1, 1)
-            pixels[i, j] = (random.randint(0, 255),  # Red channel
-                            random.randint(0, 255),  # Green channel
-                            random.randint(0, 255))  # Blue channel
+            pixels[i, j] = (random.randint(100, 255),  # Red channel
+                            random.randint(0, 100),  # Green channel
+                            random.randint(100, 255))  # Blue channel
 
     im.save(filename)
 
@@ -141,9 +154,9 @@ def generate_art(filename, x_size=350, y_size=350):
         x_size, y_size: optional args to set image dimensions (default: 350)
     """
     # Functions for red, green, and blue channels - where the magic happens!
-    red_function = build_random_function(5,20)
-    green_function = build_random_function(5,20)
-    blue_function = build_random_function(5,20)
+    red_function = build_random_function(10,13)
+    green_function = build_random_function(7,10)
+    blue_function = build_random_function(7,12)
 
     # Create image and loop over all pixels
     im = Image.new("RGB", (x_size, y_size))
