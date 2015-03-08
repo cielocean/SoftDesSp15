@@ -2,7 +2,7 @@
 
 from Nsound import *
 import numpy as np
-from random import choice
+import random
 
 def add_note(out, instr, key_num, duration, bpm, volume):
     """ Adds a note from the given instrument to the specified stream
@@ -28,9 +28,30 @@ solo = AudioStream(sampling_rate, 1)
 
 """ these are the piano key numbers for a 3 octave blues scale in A
 	See: http://en.wikipedia.org/wiki/Blues_scale """
-blues_scale = [25, 28, 30, 31, 32, 35, 37, 40, 42, 43, 44, 47, 49, 52, 54, 55, 56, 59, 61]
-beats_per_minute = 45				# Let's make a slow blues solo
+blues_scale = [25, 28, 30, 31, 32, 35, 37, 40, 42, 43, 44, 47, 49]#, 52, 54, 55, 56, 59, 61]
+beats_per_minute = 90				# Let's make a slow blues solo
 
-add_note(solo, bass, blues_scale[0], 1.0, beats_per_minute, 1.0)
+curr_note = 0
+add_note(solo, bass, blues_scale[curr_note], 1.0, beats_per_minute, 1.0)
+
+licks = [ [ [1, 0.5], [1, 0.5], [1, 0.5], [1, 0.5] ] ,[ [-1, 0.5], [-1, 0.5], [-1, 0.5], [-1, 0.5] ],[[1, 0.5*1.1], [1, 0.5*0.9], [1, 0.5*1.1], [1, 0.5*0.9]]]
+for i in range(5):
+    lick = licks[random.randint(0,2)]
+    for note in lick:
+        curr_note += note[0]
+        add_note(solo, bass, blues_scale[curr_note], note[1], beats_per_minute, 1.0)
 
 solo >> "blues_solo.wav"
+
+backing_track = AudioStream(sampling_rate, 1)
+Wavefile.read('backing.wav', backing_track)
+
+m = Mixer()
+
+solo *= 0.4             # adjust relative volumes to taste
+backing_track *= 2.0
+
+m.add(2.25, 0, solo)    # delay the solo to match up with backing track   
+m.add(0, 0, backing_track)
+
+m.getStream(500.0) >> "slow_blues.wav"
