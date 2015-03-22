@@ -15,10 +15,10 @@ import random
 import string
 
 import numpy    # Used for statistics
-from deap import algorithms
-from deap import base
-from deap import tools
-
+# from deap import algorithms
+# from deap import base
+# from deap import tools
+from deap import (algorithms, base, tools)
 
 #-----------------------------------------------------------------------------
 # Global variables
@@ -94,6 +94,26 @@ class Message(list):
 
 # TODO: Implement levenshtein_distance function (see Day 9 in-class exercises)
 # HINT: Now would be a great time to implement memoization if you haven't
+
+def levenshtein_distance(s1, s2, m = None):
+    """
+    Computes the Levenshtein distance between two input strings with memoization
+    """
+    if m is None:
+        m = {}
+    #cases when either of input strings are none
+    if len(s1) == 0:
+        return len(s2)
+    if len(s2) == 0:
+        return len(s1)
+    #return memoized answer
+    if (len(s1),len(s2)) in m:
+        return m[len(s1),len(s2)]
+
+    dist = min([int(s1[0] != s2[0]) + levenshtein_distance(s1[1:],s2[1:],m), 1+levenshtein_distance(s1[1:],s2,m), 1+levenshtein_distance(s1,s2[1:],m)])
+    m[len(s1),len(s2)] = dist
+    
+    return dist
 
 def evaluate_text(message, goal_text, verbose=VERBOSE):
     """
