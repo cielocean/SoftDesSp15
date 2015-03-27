@@ -25,7 +25,9 @@ while(True):
 	#For blurring faces
 	for (x,y,w,h) in faces:
 		frame[y:y+h,x:x+w,:] = cv2.dilate(frame[y:y+h,x:x+w,:], kernel)
-		cv2.rectangle(frame,(x,y),(x+w,y+h),(0,0,255))
+		# cv2.rectangle(frame,(x,y),(x+w,y+h),(0,0,255))
+		# cv2.circle(frame,(x+w/2,y+h/2),w/2,(0,100,200),-1)
+		cv2.ellipse(frame,(x+w/2,y+h/2),(w/2,h*4/7),0,0,360,(0,100,200),-1)
 		#Eyes
 		rx = random.randint (-5,5)
 		ry = random.randint (-3,3)
@@ -44,12 +46,12 @@ while(True):
 		cv2.circle(frame,(x+3*w/4+rx,y+4*h/7+ry),w/8,(180,180,220),-1)
 		#Mouth
 		cv2.ellipse(frame,(x+w/2,y+2*h/3),(w/12,w/rm),0,5*rm,180-5*rm,(10,10,255),3)
-		cv2.ellipse(frame,(x+w/2+w/12,y+2*h/3),(w/12,w/12),0,20,160,(10,50,255),3)
-		cv2.ellipse(frame,(x+w/2-w/12,y+2*h/3),(w/12,w/12),0,20,160,(10,50,255),3)
+		cv2.ellipse(frame,(x+w/2+w/12,y+2*h/3),(w/12,w/12),0,20,160,(10,10,255),3)
+		cv2.ellipse(frame,(x+w/2-w/12,y+2*h/3),(w/12,w/12),0,20,160,(10,10,255),3)
 		#Ears
-		cv2.ellipse(frame,(x+w,y),(w/8,w/8),0,180,450,(0,100,200),3)
+		cv2.ellipse(frame,(x+w,y),(w/random.randint(6,8),w/random.randint(6,8)),0,180,450,(0,100,200),3)
 		cv2.ellipse(frame,(x+w,y),(w/13,w/13),0,180,450,(255,255,255),3)
-		cv2.ellipse(frame,(x,y),(w/8,w/8),0,90,360,(0,100,200),3)
+		cv2.ellipse(frame,(x,y),(w/random.randint(6,8),w/random.randint(6,8)),0,90,360,(0,100,200),3)
 		cv2.ellipse(frame,(x,y),(w/13,w/13),0,90,360,(255,255,255),3)
 		#Nose
 
