@@ -89,7 +89,7 @@ class Message(list):
 
 
 #-----------------------------------------------------------------------------
-# Genetic operators
+# Genetic operators3
 #-----------------------------------------------------------------------------
 
 # TODO: Implement levenshtein_distance function (see Day 9 in-class exercises)
@@ -141,8 +141,14 @@ def mutate_text(message, prob_ins=0.05, prob_del=0.05, prob_sub=0.05):
     """
 
     if random.random() < prob_ins:
-        # TODO: Implement insertion-type mutation
-        pass
+        r = random.randrange(len(message))
+        message += message[:r]+[random.choice(VALID_CHARS)]+message[r:]
+    if random.random() < prob_del:
+        r = random.randrange(len(message))
+        message = message[:r]+message[r+1:]
+    if random.random() < prob_sub:
+        r = random.randrange(len(message))
+        message = message[:r]+[random.choice(VALID_CHARS)]+message[r+1:]
 
     # TODO: Also implement deletion and substitution mutations
     # HINT: Message objects inherit from list, so they also inherit
@@ -155,6 +161,23 @@ def mutate_text(message, prob_ins=0.05, prob_del=0.05, prob_sub=0.05):
 #-----------------------------------------------------------------------------
 # DEAP Toolbox and Algorithm setup
 #-----------------------------------------------------------------------------
+def TwoPointCrossover(parent1, parent2):
+    child1 = ""
+    child2 = ""
+    parent_1 = max([parent1, parent2], key = len)
+    parent_2 = min([parent1, parent2], key = len)
+    parent_2 = parent_2 + ' '*(len(parent_1)-len(parent_2))
+
+    for i in range(len(parent_1)):
+
+        if random.randint(0,1)==1 :
+            child1 += parent_1[i]
+            child2 += parent_2[i]
+        else:
+            child1 += parent_2[i]
+            child2 += parent_1[i]
+    return (child1, child2)
+
 
 def get_toolbox(text):
     """Return DEAP Toolbox configured to evolve given 'text' string"""
@@ -210,7 +233,6 @@ def evolve_string(text):
 
     return pop, log
 
-
 #-----------------------------------------------------------------------------
 # Run if called from the command line
 #-----------------------------------------------------------------------------
@@ -235,4 +257,5 @@ if __name__ == "__main__":
             raise ValueError(msg.format(goal=goal, char=char, val=VALID_CHARS))
 
     # Run evolutionary algorithm
+
     pop, log = evolve_string(goal)
