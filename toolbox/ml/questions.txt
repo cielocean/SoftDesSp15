@@ -1,0 +1,13 @@
+    Machine Learning
+
+    1. What is the general trend in the curve?
+    It is increasing at a subtly decreasing rate. It is almost linear. Changing the Logistic Regression will change the general trend/ make the trend more obvious.
+
+    2. Are there parts of the curve that appear to be noisier than others?  Why?
+    No. 
+    At first, it seemed like there were nosier part because the graph oscillates about the average line. However, changing the step size of the train_percentages from 5 to 1 made it easier to see thaat the nosier part was occuring randomly, showing that the noise depends on each iteration and that there is no specific part which always appear noisier than others.
+
+    3. How many trials do you need to get a smooth curve?
+    A few hundreds.
+
+    4. Try different values for C (by changing LogisticRegression(C=10**-10)).  What happens?  If you want to know why this happens, see this Wikipedia page as well as the documentation for LogisticRegression in scikit-learn.
